@@ -15,27 +15,15 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
         
         // Fetch data once an hour.
         UIApplication.shared.setMinimumBackgroundFetchInterval(3600)
+
+//        UIApplication.shared.setMinimumBackgroundFetchInterval(10)
+
         
         let banksViewModel = RegionsList()
         banksViewModel.regionsVM.refreshAllBanks()
         
         return true
     }
-
-    // TODO implement this feature
-    
-//    func application(_ application: UIApplication,
-//                     performFetchWithCompletionHandler completionHandler:
-//                     @escaping (UIBackgroundFetchResult) -> Void) {
-//       // Check for new data.
-//
-//       if let newData = fetchUpdates() {
-//          addDataToFeed(newData: newData)
-//          completionHandler(.newData)
-//       }
-//       completionHandler(.noData)
-//    }
-    
     
     // MARK: UISceneSession Lifecycle
 

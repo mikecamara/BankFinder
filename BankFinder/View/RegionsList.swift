@@ -41,7 +41,14 @@ struct RegionsList: View {
                 
             .navigationBarTitle("Regions")
             .navigationBarItems(trailing:Button(action: {
+                    // TODO
+                    // if last refresh greater than one hour
+                    // refresh all banks
                     self.regionsVM.refreshAllBanks()
+                
+                    //else
+                    // fetchallbanks
+                
             }, label: {
                 Text("Fetch Banks")
             }))

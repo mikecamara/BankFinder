@@ -64,7 +64,7 @@ class BanksViewModel: ObservableObject, Identifiable {
     }
     
     static var getAllEstonianBanks: [BankLocation] {
-        let defaultObject =  BankLocation(t: 0, n: "s", a: "a", r: "r", av: "r", lat: 0.0, lon: 0.0, i: "t")
+        let defaultObject =  BankLocation(t: 0, n: "s", a: "a", r: "No banks available", av: "r", lat: 0.0, lon: 0.0, i: "t")
         if let objects = UserDefaults.standard.value(forKey: "SavedEstonianBanks") as? Data {
             let decoder = JSONDecoder()
             if let objectsDecoded = try? decoder.decode(Array.self, from: objects) as [BankLocation] {
@@ -78,7 +78,7 @@ class BanksViewModel: ObservableObject, Identifiable {
     }
     
     static var getAllLatvianBanks: [BankLocation] {
-       let defaultObject =  BankLocation(t: 0, n: "s", a: "a", r: "r", av: "r", lat: 0.0, lon: 0.0, i: "t")
+       let defaultObject =  BankLocation(t: 0, n: "s", a: "a", r: "No banks available", av: "r", lat: 0.0, lon: 0.0, i: "t")
        if let objects = UserDefaults.standard.value(forKey: "SavedLatvianBanks") as? Data {
           let decoder = JSONDecoder()
           if let objectsDecoded = try? decoder.decode(Array.self, from: objects) as [BankLocation] {
@@ -92,7 +92,7 @@ class BanksViewModel: ObservableObject, Identifiable {
     }
     
     static var getAllLithuanianBanks: [BankLocation] {
-       let defaultObject =  BankLocation(t: 0, n: "s", a: "a", r: "r", av: "r", lat: 0.0, lon: 0.0, i: "t")
+       let defaultObject =  BankLocation(t: 0, n: "s", a: "a", r: "No banks available", av: "r", lat: 0.0, lon: 0.0, i: "t")
        if let objects = UserDefaults.standard.value(forKey: "SavedLithuanianBanks") as? Data {
           let decoder = JSONDecoder()
           if let objectsDecoded = try? decoder.decode(Array.self, from: objects) as [BankLocation] {
@@ -246,9 +246,32 @@ class BanksViewModel: ObservableObject, Identifiable {
     }
     
     func refreshAllBanks(){
-        refreshEstonianBanks()
-        refreshLatvianBanks()
-        refreshLithuaniaBanks()
+        var mustRefresh: Bool = true
+        
+        if let dateLastDownload = UserDefaults.standard.object(forKey: "lastDownload") as? Date {
+            let userCalendar = Calendar.current
+            let requestedComponent: Set<Calendar.Component> = [.second]
+            let startTime = dateLastDownload
+            let endTime = Date()
+            let timeDifference = userCalendar.dateComponents(requestedComponent, from: startTime, to: endTime)
+            
+            if let differenceInSeconds = timeDifference.second {
+                if (differenceInSeconds < 3599){
+                    mustRefresh = false
+                }
+            }
+        }
+        
+        if (mustRefresh){
+            refreshEstonianBanks()
+            refreshLatvianBanks()
+            refreshLithuaniaBanks()
+            UserDefaults.standard.set(Date(), forKey: "lastDownload")
+        } else {
+            fetchEstonianBanks()
+            fetchLatvianBanks()
+            fetchLithuaniaBanks()
+        }
     }
     
     func fetchAllBanks(){
