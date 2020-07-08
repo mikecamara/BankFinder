@@ -52,8 +52,3 @@ struct RegionsList: View {
     }
 }
 
-struct RegionsList_Previews: PreviewProvider {
-    static var previews: some View {
-        RegionsList()
-    }
-}

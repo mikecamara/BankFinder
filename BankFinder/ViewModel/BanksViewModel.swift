@@ -29,11 +29,14 @@ class BanksViewModel: ObservableObject, Identifiable {
     var arrayOfLithuaniaRegionsStrings: [String] = []
         
     func fetchBanksFromRegion(regionName: String, countryName: String){
+        banksInEstoniaRegion = []
+        banksInLithuaniaRegion = []
+        banksInLatviaRegion = []
         if countryName == "Estonia" {
             fetchEstonianBanks()
             for bank in self.banksEstonia {
                 if (bank.r == regionName) {
-                    if !self.banksInEstoniaRegion.contains(where: { $0.n == bank.n }) {
+                    if !self.banksInEstoniaRegion.contains(where: { $0.n?.capitalized == bank.n?.capitalized }) {
                         var bankToAdd: BankLocation = BankLocation(t: bank.t, n: bank.n?.capitalized, a: bank.a?.capitalized , r: bank.r, av: bank.av, lat: bank.lat, lon: bank.lon, i: bank.i)
                         self.banksInEstoniaRegion.append(bankToAdd)
                     }
@@ -45,7 +48,7 @@ class BanksViewModel: ObservableObject, Identifiable {
             fetchLatvianBanks()
             for bank in self.banksLatvia {
                 if (bank.r == regionName) {
-                    if !self.banksInLatviaRegion.contains(where: { $0.n == bank.n }) {
+                    if !self.banksInLatviaRegion.contains(where: { $0.n?.capitalized == bank.n?.capitalized }) {
                         var bankToAdd: BankLocation = BankLocation(t: bank.t, n: bank.n?.capitalized, a: bank.a?.capitalized , r: bank.r, av: bank.av, lat: bank.lat, lon: bank.lon, i: bank.i)
                          self.banksInLatviaRegion.append(bankToAdd)
                     }
@@ -57,7 +60,7 @@ class BanksViewModel: ObservableObject, Identifiable {
             fetchLithuaniaBanks()
             for bank in self.banksLithuania {
                 if (bank.r == regionName) {
-                    if !self.banksInLithuaniaRegion.contains(where: { $0.n == bank.n }) {
+                    if !self.banksInLithuaniaRegion.contains(where: { $0.n?.capitalized == bank.n?.capitalized }) {
                         var bankToAdd: BankLocation = BankLocation(t: bank.t, n: bank.n?.capitalized, a: bank.a?.capitalized , r: bank.r, av: bank.av, lat: bank.lat, lon: bank.lon, i: bank.i)
                          self.banksInLithuaniaRegion.append(bankToAdd)
                     }

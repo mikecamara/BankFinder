@@ -17,41 +17,6 @@ struct BankDetails: View {
     var bank: BankLocation
     @Environment(\.presentationMode) var presentation
     
-    func returnTypeValue(type: Int) -> String {
-        // 0 — Branch
-        // 1 — ATM (Automated Teller Machine)
-        // 2 — BNA (Bunch Note Acceptor)
-        var typeString: String
-        switch type {
-            case 0:
-                typeString = "Branch"
-            case 1:
-                typeString = "ATM (Automated Teller Machine)"
-            case 2:
-                typeString = "BNA (Bunch Note Acceptor)"
-            default:
-                typeString = ""
-        }
-        return typeString
-    }
-    
-    func openMap() {
-        let latitute:CLLocationDegrees =  bank.lat ?? 0.0
-        let longitute:CLLocationDegrees =  bank.lon ?? 0.0
-
-        let regionDistance:CLLocationDistance = 10000
-        let coordinates = CLLocationCoordinate2DMake(latitute, longitute)
-        let regionSpan = MKCoordinateRegion(center: coordinates, latitudinalMeters: regionDistance, longitudinalMeters: regionDistance)
-        let options = [
-            MKLaunchOptionsMapCenterKey: NSValue(mkCoordinate: regionSpan.center),
-            MKLaunchOptionsMapSpanKey: NSValue(mkCoordinateSpan: regionSpan.span)
-        ]
-        let placemark = MKPlacemark(coordinate: coordinates, addressDictionary: nil)
-        let mapItem = MKMapItem(placemark: placemark)
-        mapItem.name = bank.n
-        mapItem.openInMaps(launchOptions: options)
-    }
-    
     var body: some View {
         VStack {
             VStack {
@@ -164,6 +129,41 @@ struct BankDetails: View {
             .navigationBarTitle(bank.n ?? "")
         }
     }
+}
+
+func returnTypeValue(type: Int) -> String {
+    // 0 — Branch
+    // 1 — ATM (Automated Teller Machine)
+    // 2 — BNA (Bunch Note Acceptor)
+    var typeString: String
+    switch type {
+        case 0:
+            typeString = "Branch"
+        case 1:
+            typeString = "ATM (Automated Teller Machine)"
+        case 2:
+            typeString = "BNA (Bunch Note Acceptor)"
+        default:
+            typeString = ""
+    }
+    return typeString
+}
+
+func openMap() {
+    let latitute:CLLocationDegrees =  bank.lat ?? 0.0
+    let longitute:CLLocationDegrees =  bank.lon ?? 0.0
+
+    let regionDistance:CLLocationDistance = 10000
+    let coordinates = CLLocationCoordinate2DMake(latitute, longitute)
+    let regionSpan = MKCoordinateRegion(center: coordinates, latitudinalMeters: regionDistance, longitudinalMeters: regionDistance)
+    let options = [
+        MKLaunchOptionsMapCenterKey: NSValue(mkCoordinate: regionSpan.center),
+        MKLaunchOptionsMapSpanKey: NSValue(mkCoordinateSpan: regionSpan.span)
+    ]
+    let placemark = MKPlacemark(coordinate: coordinates, addressDictionary: nil)
+    let mapItem = MKMapItem(placemark: placemark)
+    mapItem.name = bank.n
+    mapItem.openInMaps(launchOptions: options)
 }
 
 func returnLocation2D(latitude: Double, longitude: Double)->CLLocationCoordinate2D {
