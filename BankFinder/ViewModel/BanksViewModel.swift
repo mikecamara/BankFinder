@@ -42,8 +42,8 @@ class BanksViewModel: ObservableObject, Identifiable {
                     }
                 }
             }
-            self.arrayOfEstoniaRegions = self.arrayOfEstoniaRegions.sorted(by: {  $0.regionName! < $1.regionName! })
-            self.banksInEstoniaRegion = self.banksInEstoniaRegion.sorted(by: {  $0.n! < $1.n! })
+            self.arrayOfEstoniaRegions = self.arrayOfEstoniaRegions.sorted(by: {  $0.regionName ?? "" < $1.regionName ?? "" })
+            self.banksInEstoniaRegion = self.banksInEstoniaRegion.sorted(by: {  $0.n ?? "" < $1.n ?? "" })
         } else if countryName == "Latvia" {
             fetchLatvianBanks()
             for bank in self.banksLatvia {
@@ -54,8 +54,8 @@ class BanksViewModel: ObservableObject, Identifiable {
                     }
                 }
             }
-            self.arrayOfLatviaRegions = self.arrayOfLatviaRegions.sorted(by: {  $0.regionName! < $1.regionName! })
-            self.banksInLatviaRegion = self.banksInLatviaRegion.sorted(by: {  $0.n! < $1.n! })
+            self.arrayOfLatviaRegions = self.arrayOfLatviaRegions.sorted(by: {  $0.regionName ?? "" < $1.regionName ?? "" })
+            self.banksInLatviaRegion = self.banksInLatviaRegion.sorted(by: {  $0.n ?? "" < $1.n ?? "" })
         } else {
             fetchLithuaniaBanks()
             for bank in self.banksLithuania {
@@ -66,8 +66,8 @@ class BanksViewModel: ObservableObject, Identifiable {
                     }
                 }
             }
-            self.arrayOfLithuaniaRegions = self.arrayOfLithuaniaRegions.sorted(by: {  $0.regionName! < $1.regionName! })
-            self.banksInLithuaniaRegion = self.banksInLithuaniaRegion.sorted(by: {  $0.n! < $1.n! })
+            self.arrayOfLithuaniaRegions = self.arrayOfLithuaniaRegions.sorted(by: {  $0.regionName ?? "" < $1.regionName ?? "" })
+            self.banksInLithuaniaRegion = self.banksInLithuaniaRegion.sorted(by: {  $0.n ?? "" < $1.n ?? "" })
         }
     }
     
@@ -130,13 +130,13 @@ class BanksViewModel: ObservableObject, Identifiable {
         
         if (arrayOfEstonianBanksSaved.count > 0){
             for bank in arrayOfEstonianBanksSaved {
-                if (!self.arrayOfEstoniaRegionsStrings.contains(bank.r!)) {
-                    self.arrayOfEstoniaRegionsStrings.append(bank.r!)
-                    let region: Region = Region(regionName: bank.r!)
+                if (!self.arrayOfEstoniaRegionsStrings.contains(bank.r ?? "")) {
+                    self.arrayOfEstoniaRegionsStrings.append(bank.r ?? "")
+                    let region: Region = Region(regionName: bank.r ?? "")
                     self.arrayOfEstoniaRegions.append(region)
                 }
             }
-            self.arrayOfEstoniaRegions = self.arrayOfEstoniaRegions.sorted(by: {  $0.regionName! < $1.regionName! })
+            self.arrayOfEstoniaRegions = self.arrayOfEstoniaRegions.sorted(by: {  $0.regionName ?? "" < $1.regionName ?? "" })
         } else {
             refreshEstonianBanks()
         }
@@ -151,13 +151,13 @@ class BanksViewModel: ObservableObject, Identifiable {
                 BanksViewModel.saveAllObjects(allObjects: self.banksEstonia, key: "SavedEstonianBanks")
                     
                 for bank in self.banksEstonia {
-                    if (!self.arrayOfEstoniaRegionsStrings.contains(bank.r!)) {
-                        self.arrayOfEstoniaRegionsStrings.append(bank.r!)
-                        let region: Region = Region(regionName: bank.r!)
+                    if (!self.arrayOfEstoniaRegionsStrings.contains(bank.r ?? "")) {
+                        self.arrayOfEstoniaRegionsStrings.append(bank.r ?? "")
+                        let region: Region = Region(regionName: bank.r ?? "")
                         self.arrayOfEstoniaRegions.append(region)
                     }
                 }
-                self.arrayOfEstoniaRegions = self.arrayOfEstoniaRegions.sorted(by: {  $0.regionName! < $1.regionName! })
+                self.arrayOfEstoniaRegions = self.arrayOfEstoniaRegions.sorted(by: {  $0.regionName ?? "" < $1.regionName ?? "" })
             }
         }.resume()
     }
@@ -172,13 +172,13 @@ class BanksViewModel: ObservableObject, Identifiable {
         
         if (arrayOfLatvianBanksSaved.count > 0){
             for bank in arrayOfLatvianBanksSaved {
-                if (!self.arrayOfLatviaRegionsStrings.contains(bank.r!)) {
-                    self.arrayOfLatviaRegionsStrings.append(bank.r!)
-                    let region: Region = Region(regionName: bank.r!)
+                if (!self.arrayOfLatviaRegionsStrings.contains(bank.r ?? "")) {
+                    self.arrayOfLatviaRegionsStrings.append(bank.r ?? "")
+                    let region: Region = Region(regionName: bank.r ?? "")
                     self.arrayOfLatviaRegions.append(region)
                 }
             }
-            self.arrayOfLatviaRegions = self.arrayOfLatviaRegions.sorted(by: {  $0.regionName! < $1.regionName! })
+            self.arrayOfLatviaRegions = self.arrayOfLatviaRegions.sorted(by: {  $0.regionName ?? "" < $1.regionName ?? "" })
         } else {
             refreshLatvianBanks()
         }
@@ -193,13 +193,13 @@ class BanksViewModel: ObservableObject, Identifiable {
                 BanksViewModel.saveAllObjects(allObjects: self.banksLatvia, key: "SavedLatvianBanks")
                 
                 for bank in self.banksLatvia {
-                    if (!self.arrayOfLatviaRegionsStrings.contains(bank.r!)) {
-                        self.arrayOfLatviaRegionsStrings.append(bank.r!)
-                        let region: Region = Region(regionName: bank.r!)
+                    if (!self.arrayOfLatviaRegionsStrings.contains(bank.r ?? "")) {
+                        self.arrayOfLatviaRegionsStrings.append(bank.r ?? "")
+                        let region: Region = Region(regionName: bank.r ?? "")
                         self.arrayOfLatviaRegions.append(region)
                     }
                 }
-                self.arrayOfLatviaRegions = self.arrayOfLatviaRegions.sorted(by: {  $0.regionName! < $1.regionName! })
+                self.arrayOfLatviaRegions = self.arrayOfLatviaRegions.sorted(by: {  $0.regionName ?? "" < $1.regionName ?? "" })
             }
         }.resume()
     }
@@ -214,13 +214,13 @@ class BanksViewModel: ObservableObject, Identifiable {
         
         if (arrayOfLithuanianBanksSaved.count > 0){
             for bank in arrayOfLithuanianBanksSaved {
-                if (!self.arrayOfLithuaniaRegionsStrings.contains(bank.r!)) {
-                    self.arrayOfLithuaniaRegionsStrings.append(bank.r!)
-                    let region: Region = Region(regionName: bank.r!)
+                if (!self.arrayOfLithuaniaRegionsStrings.contains(bank.r ?? "")) {
+                    self.arrayOfLithuaniaRegionsStrings.append(bank.r ?? "")
+                    let region: Region = Region(regionName: bank.r ?? "")
                     self.arrayOfLithuaniaRegions.append(region)
                 }
             }
-            self.arrayOfLithuaniaRegions = self.arrayOfLithuaniaRegions.sorted(by: {  $0.regionName! < $1.regionName! })
+            self.arrayOfLithuaniaRegions = self.arrayOfLithuaniaRegions.sorted(by: {  $0.regionName ?? "" < $1.regionName ?? "" })
         } else {
             refreshLithuaniaBanks()
         }
@@ -235,14 +235,14 @@ class BanksViewModel: ObservableObject, Identifiable {
                 self.banksLithuania = try! JSONDecoder().decode([BankLocation].self, from: data!)
                 BanksViewModel.saveAllObjects(allObjects: self.banksLithuania, key: "SavedLithuanianBanks")
                 for bank in self.banksLithuania {
-                    if (!self.arrayOfLithuaniaRegionsStrings.contains(bank.r!)) {
-                        self.arrayOfLithuaniaRegionsStrings.append(bank.r!)
-                        let region: Region = Region(regionName: bank.r!)
+                    if (!self.arrayOfLithuaniaRegionsStrings.contains(bank.r ?? "")) {
+                        self.arrayOfLithuaniaRegionsStrings.append(bank.r ?? "")
+                        let region: Region = Region(regionName: bank.r ?? "")
                         self.arrayOfLithuaniaRegions.append(region)
                     }
                 }
                 
-                self.arrayOfLithuaniaRegions = self.arrayOfLithuaniaRegions.sorted(by: {  $0.regionName! < $1.regionName! })
+                self.arrayOfLithuaniaRegions = self.arrayOfLithuaniaRegions.sorted(by: {  $0.regionName ?? "" < $1.regionName ?? "" })
             }
         }.resume()
     }
