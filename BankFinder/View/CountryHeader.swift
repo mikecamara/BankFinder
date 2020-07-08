@@ -15,7 +15,7 @@ struct CountryHeader: View {
             if (countryName == "Estonia"){
                 Text("🇪🇪")
                 Text(countryName)
-            } else if (countryName == "Estonia") {
+            } else if (countryName == "Latvia") {
                 Text("🇱🇻")
                 Text(countryName)
             } else {

@@ -18,40 +18,33 @@ struct RegionsList: View {
             List {
                 Section(header: CountryHeader(countryName: "Estonia")) {
                     ForEach(regionsVM.arrayOfEstoniaRegions) { region in
-                        NavigationLink(destination: RegionBanksList(regionName: "\(region.regionName!)", countryName: "Estonia")) {
+                        NavigationLink(destination: RegionBanksList(regionName: "\(region.regionName ?? "")", countryName: "Estonia")) {
                             RegionRow(region: region)
                         }
                     }
                 }
                 Section(header: CountryHeader(countryName: "Latvia")) {
                     ForEach(regionsVM.arrayOfLatviaRegions) { region in
-                        NavigationLink(destination: RegionBanksList(regionName: "\(region.regionName!)", countryName: "Latvia")) {
+                        NavigationLink(destination: RegionBanksList(regionName: "\(region.regionName ?? "")", countryName: "Latvia")) {
                             RegionRow(region: region)
                         }
                     }
                 }
                 Section(header: CountryHeader(countryName: "Lithuania")) {
                     ForEach(regionsVM.arrayOfLithuaniaRegions) { region in
-                        NavigationLink(destination: RegionBanksList(regionName: "\(region.regionName!)", countryName: "Lithuania")) {
+                        NavigationLink(destination: RegionBanksList(regionName: "\(region.regionName ?? "")", countryName: "Lithuania")) {
                             RegionRow(region: region)
                         }
                     }
                 }
             }.listStyle(GroupedListStyle())
-                
+            .accessibility(identifier: "regionsList")
             .navigationBarTitle("Regions")
             .navigationBarItems(trailing:Button(action: {
-                    // TODO
-                    // if last refresh greater than one hour
-                    // refresh all banks
                     self.regionsVM.refreshAllBanks()
-                
-                    //else
-                    // fetchallbanks
-                
             }, label: {
                 Text("Fetch Banks")
-            }))
+                }).accessibility(identifier: "refreshRegionsButton"))
         }
         .onAppear {
             self.regionsVM.fetchAllBanks()

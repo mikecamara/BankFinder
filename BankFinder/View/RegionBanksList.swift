@@ -11,10 +11,10 @@ import SwiftUI
 struct RegionBanksList: View {
     
     @ObservedObject var regionsVM = BanksViewModel()
-    var regionName: String
-    var countryName: String
     @State var isActive = false
     @State var showingDetail = false
+    var regionName: String
+    var countryName: String
     
     var body: some View {
         List {
@@ -56,6 +56,7 @@ struct RegionBanksList: View {
             self.regionsVM.fetchBanksFromRegion(regionName: self.regionName, countryName: self.countryName)    
         }
         .navigationBarTitle(self.regionName)
+        .accessibility(identifier: "regionBankList")
     }
 }
 

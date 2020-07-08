@@ -12,7 +12,7 @@ struct RegionRow: View {
     var region: Region
     var body: some View {
         HStack {
-            Text("\(region.regionName!)").foregroundColor(.secondary)
+            Text("\(region.regionName ?? "")").foregroundColor(.secondary)
             Spacer()
         }
     }

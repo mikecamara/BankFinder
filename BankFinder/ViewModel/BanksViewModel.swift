@@ -27,32 +27,44 @@ class BanksViewModel: ObservableObject, Identifiable {
     @Published var arrayOfLithuaniaRegions: [Region] = []
     @Published var banksInLithuaniaRegion: [BankLocation] = []
     var arrayOfLithuaniaRegionsStrings: [String] = []
-    
+        
     func fetchBanksFromRegion(regionName: String, countryName: String){
         if countryName == "Estonia" {
             fetchEstonianBanks()
             for bank in self.banksEstonia {
                 if (bank.r == regionName) {
-                    self.banksInEstoniaRegion.append(bank)
+                    if !self.banksInEstoniaRegion.contains(where: { $0.n == bank.n }) {
+                        var bankToAdd: BankLocation = BankLocation(t: bank.t, n: bank.n?.capitalized, a: bank.a?.capitalized , r: bank.r, av: bank.av, lat: bank.lat, lon: bank.lon, i: bank.i)
+                        self.banksInEstoniaRegion.append(bankToAdd)
+                    }
                 }
             }
             self.arrayOfEstoniaRegions = self.arrayOfEstoniaRegions.sorted(by: {  $0.regionName! < $1.regionName! })
+            self.banksInEstoniaRegion = self.banksInEstoniaRegion.sorted(by: {  $0.n! < $1.n! })
         } else if countryName == "Latvia" {
             fetchLatvianBanks()
             for bank in self.banksLatvia {
                 if (bank.r == regionName) {
-                    self.banksInLatviaRegion.append(bank)
+                    if !self.banksInLatviaRegion.contains(where: { $0.n == bank.n }) {
+                        var bankToAdd: BankLocation = BankLocation(t: bank.t, n: bank.n?.capitalized, a: bank.a?.capitalized , r: bank.r, av: bank.av, lat: bank.lat, lon: bank.lon, i: bank.i)
+                         self.banksInLatviaRegion.append(bankToAdd)
+                    }
                 }
             }
             self.arrayOfLatviaRegions = self.arrayOfLatviaRegions.sorted(by: {  $0.regionName! < $1.regionName! })
+            self.banksInLatviaRegion = self.banksInLatviaRegion.sorted(by: {  $0.n! < $1.n! })
         } else {
             fetchLithuaniaBanks()
             for bank in self.banksLithuania {
                 if (bank.r == regionName) {
-                    self.banksInLithuaniaRegion.append(bank)
+                    if !self.banksInLithuaniaRegion.contains(where: { $0.n == bank.n }) {
+                        var bankToAdd: BankLocation = BankLocation(t: bank.t, n: bank.n?.capitalized, a: bank.a?.capitalized , r: bank.r, av: bank.av, lat: bank.lat, lon: bank.lon, i: bank.i)
+                         self.banksInLithuaniaRegion.append(bankToAdd)
+                    }
                 }
             }
             self.arrayOfLithuaniaRegions = self.arrayOfLithuaniaRegions.sorted(by: {  $0.regionName! < $1.regionName! })
+            self.banksInLithuaniaRegion = self.banksInLithuaniaRegion.sorted(by: {  $0.n! < $1.n! })
         }
     }
     
@@ -213,6 +225,7 @@ class BanksViewModel: ObservableObject, Identifiable {
     
     func refreshLithuaniaBanks(){
         guard let urlLithuania = URL(string: apiUrlLithuania) else {return}
+              
         URLSession.shared.dataTask(with: urlLithuania) { (data, resp, err) in
             DispatchQueue.main.async {
                 self.setCookie(domain: ".swedbank.lt")
@@ -247,7 +260,6 @@ class BanksViewModel: ObservableObject, Identifiable {
     
     func refreshAllBanks(){
         var mustRefresh: Bool = true
-        
         if let dateLastDownload = UserDefaults.standard.object(forKey: "lastDownload") as? Date {
             let userCalendar = Calendar.current
             let requestedComponent: Set<Calendar.Component> = [.second]
